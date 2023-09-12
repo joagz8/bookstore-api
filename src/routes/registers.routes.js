@@ -3,7 +3,7 @@ import { signIn, signUp } from "../controllers/registers.controller.js"
 
 const router = Router()
 
-router.get('/sign-in', signIn)
-router.get('/sign-up', signUp)
+router.post('/sign-in', signIn)
+router.post('/sign-up', signUp)
 
 export default router

@@ -8,23 +8,25 @@ export const signIn = async (req, resp) => {
         const dbRegister = await connection.query('SELECT username, password FROM Register WHERE username = ?', [username])
         let validUser = dbRegister[0][0].username
         let validPassword = dbRegister[0][0].password
-        console.log(validUser);
-        console.log(validPassword);
+        //console.log(validUser);
+        //console.log(validPassword);
         if (validUser == null) {
-            resp.send('Usuario incorrecto')
+            return resp.send('Usuario incorrecto')
         }
         else if (validPassword == null) {
-            resp.send('Contraseña incorrecta')
+            return resp.send('Contraseña incorrecta')
         }
         else if (validUser == null && validPassword == null ) {
-            resp.send('Nombre de usuario y contraseña incorrectos')
+            return resp.send('Nombre de usuario y contraseña incorrectos')
         }
         else {
             const validEncryptPassword = await bcrypt.compare(JSON.stringify(password), validPassword)
             
             if (validEncryptPassword) {
                 const token = generateToken({username})
+                console.log('Token:');
                 console.log(token);
+                resp.send('Inicio de sesión correcto')
             }
         }
     } catch (error) {
@@ -42,6 +44,7 @@ export const signUp = async (req, resp) => {
             await connection.query('INSERT INTO Register (username, password) VALUES (?, ?)', [username, encryptPassword])
             const token = generateToken({username})
             console.log(token);
+            resp.send('Registro exitoso')
         }
     } catch (error) {
         console.log('Error', error);
