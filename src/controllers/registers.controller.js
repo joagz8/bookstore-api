@@ -43,6 +43,7 @@ export const signUp = async (req, resp) => {
         } else {
             await connection.query('INSERT INTO Register (username, password) VALUES (?, ?)', [username, encryptPassword])
             const token = generateToken({username})
+            console.log('Token:');
             console.log(token);
             resp.send('Registro exitoso')
         }
