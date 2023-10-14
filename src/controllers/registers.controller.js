@@ -7,7 +7,7 @@ export const signIn = async (req, resp) => {
         const {username, password} = req.body
         const dbRegister = await connection.query('SELECT username, password FROM Register WHERE username = ?', [username])
         let validUser = dbRegister[0][0].username
-        let validPassword = dbRegister[0][0].password
+        let validPassword = dbRegister[0][0].password 
         //console.log(validUser);
         //console.log(validPassword);
         if (validUser == null) {
